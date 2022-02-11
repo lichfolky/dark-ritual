@@ -1,38 +1,137 @@
 /******************************************************************************
- 
+ DARK RITUAL
 ******************************************************************************/
-@import "reset.css";
-/* Remove browser default styles */
+
+/* ***Root and vars*** */
 
 :root {
-  --color-bg: #fff;
-  --color-text: #000;
-  --color-primary: #000;
-  --color-secondary: #000;
-  --font-family: georgia;
-  --font-family-display: georgia;
+  /* HSL colors hue, saturation, and lightness. */
+  --color-bg: hsl(0, 0%, 100%);
+  --color-text: hsl(0, 0%, 24%);
+  --color-primary: hsl(0, 0%, 24%);
+  --color-secondary: hsl(0, 0%, 24%);
+
+  /* Some websafe fonts I like: helvetica, georgia, garamond */
+  --font-family: helvetica, system-ui, sans-serif;
+  --font-family-display: helvetica, system-ui, serif;
+
+  /* Text length should be around 45-60 for small and medium sized texts, 65-80 for single colmumns body texts*/
+  --text-length-mobile: 50ch;
+  --text-length-screen: 67ch;
+
+  /* Font size should be somewhere in the range of 18px to 26px */
+  --base-font-size-mobile: 115%;
+  --base-font-size-screen: 131%;
+  font-size: var(--base-font-size-mobile);
+
+  /* Ratio majorThird: 1.25 */
+  --h4-fs: 1.25rem;
+  --h3-fs: 1.56rem;
+  --h2-fs: 1.95rem;
+  --h1-fs: 2.44rem;
+  --small-fs: 0.8rem;
+
+  /* line height fallback */
+  --line-height: 1.5;
+  /* line height magic */
+  --base-line-height-mobile: calc(2px + 2ex + 2px);
+  --base-line-height-screen: calc(2px + 2ex + 2px);
+
+  /* I found this to be really useful for a consistent layout */
+  --space-xxs: 0.25rem;
+  --space-xs: 0.5rem;
+  --space-sm: 1rem;
+  --space-md: 1.5rem;
+  --space-lg: 2rem;
+  --space-xl: 3rem;
+  --space-xxl: 6rem;
+
+  color-scheme: dark light;
+}
+
+/* ***Base style*** */
+
+html {
+  block-size: 100%;
 }
 
 body {
   font-family: var(--font-family);
-  background-color: var(--color-bg);
-  color: var(--color-text);
+  font-size: var(--font-size-mobile);
+
   min-height: 100vh;
+  min-block-size: 100%;
+  padding: var(--space-sm);
+
+  color: var(--color-text);
   accent-color: var(--color-secondary);
+  background-color: var(--color-bg);
 }
 
-p {
-  color: blue;
+/* ***Typography*** */
+
+p,
+li,
+h1,
+h2,
+h3,
+h4 {
+  /* Magic fluid line-height */
+  line-height: var(--line-height);
+  line-height: var(--base-line-height-mobile);
+  /* Help prevent overflow of long words/names/URLs */
+  overflow-wrap: break-word;
+  /* Optional, not supported for all languages*/
+  /* hyphens: auto; */
+  /* may have performance drawbacks */
+  text-rendering: optimizeLegibility;
+  /* This should be revaluated at the end */
+  margin-block-start: 0;
+  margin-block-end: 0.65em;
 }
 
-header {
-  & p {
-    color: red !important;
-  }
+:is(p, li, h1, h2, h3, h4) * {
+  /* Magic fluid for childrens */
+  line-height: var(--base-line-height-mobile);
 }
 
-/* ***Scroll behavior*** */
-/* #region */
+h1,
+h2,
+h3,
+h4 {
+  letter-spacing: -0.02em;
+  font-weight: 700;
+}
+
+h1 {
+  font-size: var(--h1-fs);
+}
+
+h2 {
+  font-size: var(--h2-fs);
+}
+
+h3 {
+  font-size: var(--h3-fs);
+}
+
+h4 {
+  font-size: var(--h4-fs);
+}
+
+small {
+  font-size: var(--small-fs);
+}
+
+/* ***Layout*** */
+
+section {
+  max-width: var(--text-length-mobile);
+}
+
+/* ***Other stuff*** */
+
+/* Scroll behavior */
 html {
   scroll-behavior: smooth;
 }
@@ -42,4 +141,38 @@ html {
     scroll-behavior: auto;
   }
 }
-/* #endregion */
+
+@media (prefers-color-scheme: light) {
+}
+
+@media (prefers-color-scheme: dark) {
+}
+/* Media queries */
+
+@media (min-width: 600px) {
+  :root {
+    font-size: var(--base-font-size-screen);
+  }
+
+  body {
+    font-size: var(--font-size-screen);
+    padding: var(--space-xl);
+  }
+
+  section {
+    max-width: var(--text-length-screen);
+  }
+
+  p,
+  li,
+  h1,
+  h2,
+  h3 {
+    line-height: var(--base-line-height-screen);
+  }
+
+  :is(p, li, h1, h2, h3, h4) * {
+    /* Magic fluid for childrens */
+    line-height: var(--base-line-height-screen);
+  }
+}
